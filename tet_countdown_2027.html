@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm Ngược Tết Nguyên Đán 2027</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lunar-javascript/lunar.js"></script>
+    <style>
+        body {
+            /* Light peach/yellow background similar to the reference image */
+            background-color: #fdf2e3;
+            /* Subtle texture/pattern to mimic the background in the image */
+            background-image: radial-gradient(#f7e1c6 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* SVG Decorative positions */
+        .decoration {
+            position: absolute;
+            top: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .dec-left {
+            left: 0;
+            transform-origin: top left;
+            width: clamp(150px, 30vw, 300px);
+        }
+        .dec-right {
+            right: 0;
+            transform: scaleX(-1);
+            transform-origin: top right;
+            width: clamp(150px, 30vw, 300px);
+        }
+        
+        /* Container to ensure text stays above decorations */
+        .content-container {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center overflow-hidden">
+
+    <!-- Left Decoration (Cherry blossom branch & lantern) -->
+    <svg class="decoration dec-left" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Branches -->
+        <path d="M0,50 Q100,70 150,150 T220,250" fill="none" stroke="#5c3a21" stroke-width="6"/>
+        <path d="M50,60 Q100,120 80,180" fill="none" stroke="#5c3a21" stroke-width="4"/>
+        <path d="M120,110 Q180,100 200,60" fill="none" stroke="#5c3a21" stroke-width="4"/>
+        
+        <!-- Cherry Blossoms -->
+        <g fill="#ff4d4d">
+            <circle cx="50" cy="60" r="10"/><circle cx="45" cy="53" r="8"/><circle cx="55" cy="53" r="8"/>
+            <circle cx="120" cy="110" r="12"/><circle cx="112" cy="100" r="10"/><circle cx="128" cy="100" r="10"/>
+            <circle cx="150" cy="150" r="9"/><circle cx="143" cy="143" r="7"/><circle cx="157" cy="143" r="7"/>
+            <circle cx="80" cy="180" r="11"/><circle cx="73" cy="172" r="9"/><circle cx="87" cy="172" r="9"/>
+            <circle cx="200" cy="60" r="10"/><circle cx="192" cy="52" r="8"/><circle cx="208" cy="52" r="8"/>
+        </g>
+        
+        <!-- Lantern -->
+        <g transform="translate(180, 160)">
+            <!-- String -->
+            <line x1="0" y1="-50" x2="0" y2="0" stroke="#ffd700" stroke-width="2"/>
+            <!-- Lantern Body -->
+            <path d="M-20,0 Q-30,25 -20,50 L20,50 Q30,25 20,0 Z" fill="#ff0000"/>
+            <!-- Golden accents -->
+            <rect x="-15" y="-5" width="30" height="5" fill="#ffd700"/>
+            <rect x="-15" y="50" width="30" height="5" fill="#ffd700"/>
+            <!-- Tassel -->
+            <path d="M-10,55 L-15,80 M0,55 L0,85 M10,55 L15,80" stroke="#ff0000" stroke-width="2"/>
+        </g>
+    </svg>
+
+    <!-- Right Decoration -->
+    <svg class="decoration dec-right" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Branches -->
+        <path d="M0,30 Q120,50 180,120 T260,200" fill="none" stroke="#5c3a21" stroke-width="6"/>
+        <path d="M60,40 Q110,100 90,150" fill="none" stroke="#5c3a21" stroke-width="4"/>
+        
+        <!-- Cherry Blossoms -->
+        <g fill="#ff4d4d">
+            <circle cx="60" cy="40" r="10"/><circle cx="53" cy="33" r="8"/><circle cx="67" cy="33" r="8"/>
+            <circle cx="180" cy="120" r="12"/><circle cx="172" cy="110" r="10"/><circle cx="188" cy="110" r="10"/>
+            <circle cx="90" cy="150" r="9"/><circle cx="83" cy="143" r="7"/><circle cx="97" cy="143" r="7"/>
+            <circle cx="260" cy="200" r="11"/><circle cx="253" cy="192" r="9"/><circle cx="267" cy="192" r="9"/>
+        </g>
+        
+        <!-- Lantern -->
+        <g transform="translate(140, 100)">
+            <line x1="0" y1="-30" x2="0" y2="0" stroke="#ffd700" stroke-width="2"/>
+            <path d="M-25,0 Q-35,30 -25,60 L25,60 Q35,30 25,0 Z" fill="#e60000"/>
+            <rect x="-18" y="-5" width="36" height="5" fill="#ffd700"/>
+            <rect x="-18" y="60" width="36" height="5" fill="#ffd700"/>
+            <path d="M-12,65 L-18,95 M0,65 L0,100 M12,65 L18,95" stroke="#e60000" stroke-width="2.5"/>
+        </g>
+    </svg>
+
+    <main class="content-container w-full max-w-4xl px-4 py-8 flex flex-col items-center justify-center text-center space-y-6 md:space-y-8">
+        
+        <!-- Dates Info -->
+        <div class="space-y-3">
+            <div id="solar-line" class="text-lg md:text-xl text-gray-900 tracking-wide">
+                HÔM NAY: Đang tải... (Dương lịch)
+            </div>
+            <div id="lunar-line" class="text-lg md:text-xl text-gray-900 tracking-wide">
+                Đang tải... (Âm lịch)
+            </div>
+        </div>
+
+        <div class="text-xl md:text-2xl text-gray-800 mt-4">
+            Chỉ còn
+        </div>
+
+        <!-- Countdown Displays -->
+        <div class="space-y-6 my-4">
+            <div id="days-count" class="text-5xl md:text-7xl font-extrabold text-red-600 drop-shadow-sm">
+                -- NGÀY
+            </div>
+            <div id="time-count" class="text-2xl md:text-4xl font-bold text-blue-700">
+                -- giờ -- phút --
+            </div>
+        </div>
+
+        <div class="text-xl md:text-3xl font-bold text-black mt-4">
+            là đến Tết Nguyên Đán 2027
+        </div>
+
+        <!-- Footer Info -->
+        <div class="space-y-4 mt-8 pt-4">
+            <div class="text-base md:text-lg text-gray-800">
+                Tết Nguyên Đán 2027 diễn ra vào thứ bảy, ngày 06/02/2027 (Dương lịch)
+            </div>
+            <div class="text-base md:text-lg text-gray-800">
+                01/01/2027 (Âm lịch)
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Target Date: 2027-02-06 00:00:00 (Lunar New Year 2027)
+        const targetDate = new Date(2027, 1, 6, 0, 0, 0); // Note: JS months are 0-indexed (1 = February)
+
+        const daysInVietnamese = [
+            'chủ nhật', 'thứ hai', 'thứ ba', 'thứ tư', 
+            'thứ năm', 'thứ sáu', 'thứ bảy'
+        ];
+
+        function padZero(num) {
+            return num.toString().padStart(2, '0');
+        }
+
+        function updateWebapp() {
+            const now = new Date();
+            
+            // --- 1. Update Solar Date ---
+            const dayOfWeek = daysInVietnamese[now.getDay()];
+            const solarDay = padZero(now.getDate());
+            const solarMonth = padZero(now.getMonth() + 1);
+            const solarYear = now.getFullYear();
+            
+            document.getElementById('solar-line').textContent = 
+                `HÔM NAY: ${dayOfWeek}, ngày ${solarDay}/${solarMonth}/${solarYear} (Dương lịch)`;
+
+            // --- 2. Update Lunar Date ---
+            try {
+                // Using the lunar-javascript library
+                const lunar = Lunar.fromDate(now);
+                const lunarDay = padZero(lunar.getDay());
+                const lunarMonth = padZero(lunar.getMonth());
+                const lunarYear = lunar.getYear();
+                
+                document.getElementById('lunar-line').textContent = 
+                    `${lunarDay}/${lunarMonth}/${lunarYear} (Âm lịch)`;
+            } catch (e) {
+                console.error("Lunar calendar error:", e);
+                document.getElementById('lunar-line').textContent = "Không thể tải ngày Âm lịch";
+            }
+
+            // --- 3. Calculate Countdown ---
+            const timeDiff = targetDate.getTime() - now.getTime();
+
+            if (timeDiff > 0) {
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                document.getElementById('days-count').textContent = `${days} NGÀY`;
+                document.getElementById('time-count').textContent = `${hours} giờ ${padZero(minutes)} phút ${padZero(seconds)}`;
+            } else {
+                // If the date has passed
+                document.getElementById('days-count').textContent = `0 NGÀY`;
+                document.getElementById('time-count').textContent = `0 giờ 00 phút 00`;
+                document.getElementById('time-count').classList.replace('text-blue-700', 'text-gray-500');
+            }
+        }
+
+        // Initialize immediately
+        updateWebapp();
+        
+        // Update every second
+        setInterval(updateWebapp, 1000);
+    </script>
+</body>
+</html>
